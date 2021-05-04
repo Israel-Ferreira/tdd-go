@@ -14,6 +14,14 @@ func ExampleSoma() {
 	// Output: 50
 }
 
+func ExampleGenerateSlice() {
+	limite := 20
+	meuSlice := GenerateSlice(limite)
+
+	fmt.Println(meuSlice)
+	// Output: [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]
+}
+
 func assertTest(t *testing.T, result int, expect int, dados []int) {
 
 	t.Helper()
@@ -45,9 +53,34 @@ func TestGenerateSlice(t *testing.T) {
 		limite := 10
 
 		resultado := GenerateSlice(limite)
-		esperado :=  []int{1,2,3,4,5,6,7,8,9,10}
+		esperado := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
 		assertResults(t, resultado, esperado, limite)
+	})
+}
+
+func TestSomaTudo(t *testing.T) {
+	t.Run("Soma de um slice de 2 elem com um de 3 items", func(t *testing.T) {
+		slice1 := []int{1, 2}
+		slice2 := []int{3, 6, 9}
+
+		resultado := SomaTudo(slice1, slice2)
+		esperado := []int{3, 18}
+
+		if !reflect.DeepEqual(resultado, esperado) {
+			t.Errorf("Resultado %v, Esperado %v", resultado, esperado)
+		}
+	})
+
+	t.Run("Retorna o slice com 1 elem", func(t *testing.T) {
+		slice1 := []int{1,2,3}
+
+		resultado := SomaTudo(slice1)
+		esperado := []int{6}
+
+		if !reflect.DeepEqual(resultado, esperado) {
+			t.Errorf("Resultado %v, Esperado %v", resultado, esperado)
+		}
 	})
 }
 
@@ -74,6 +107,21 @@ func TestSoma(t *testing.T) {
 		esperado := 0
 
 		assertTest(t, resultado, esperado, numeros)
+	})
+
+}
+
+func BenchmarkGenerateSlice(b *testing.B) {
+	b.Run("Gerar um Slice de 10 numeros", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			GenerateSlice(10)
+		}
+	})
+
+	b.Run("Gerar um Slice de 1e6 Numeros", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			GenerateSlice(1e6)
+		}
 	})
 
 }

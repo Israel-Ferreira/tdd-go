@@ -10,6 +10,17 @@ func Soma(numeros []int) (soma int) {
 }
 
 
+func SomaTudo(slices ...[]int) (sliceSoma []int) {
+
+	for _, slice := range slices {
+		soma := Soma(slice)
+		sliceSoma = append(sliceSoma, soma)
+	}
+
+	return 
+}
+
+
 func GenerateSlice(limit int) []int {
 
 	slice := []int{}
